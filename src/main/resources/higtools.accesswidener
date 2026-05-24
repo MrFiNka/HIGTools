@@ -1,3 +1,7 @@
-accessWidener	v1	named
+accessWidener	v1	official
 
-accessible   method  net/minecraft/client/network/ClientPlayerInteractionManager syncSelectedSlot ()V
+# Unknown
+accessible  method  net/minecraft/client/multiplayer/MultiPlayerGameMode ensureHasSentCarriedItem ()V
+
+# HighwayBuilderHIG
+accessible  method  net/minecraft/client/multiplayer/MultiPlayerGameMode startPrediction (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/multiplayer/prediction/PredictiveAction;)V

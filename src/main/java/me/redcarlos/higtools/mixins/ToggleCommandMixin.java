@@ -10,7 +10,7 @@ import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.combat.AutoLog;
 import meteordevelopment.meteorclient.systems.modules.movement.SafeWalk;
 import meteordevelopment.meteorclient.systems.modules.render.FreeLook;
-import net.minecraft.command.CommandSource;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -51,7 +51,7 @@ public abstract class ToggleCommandMixin extends Command {
     };
 
     @Inject(method = "build", at = @At("HEAD"))
-    private void inject(LiteralArgumentBuilder<CommandSource> builder, CallbackInfo ci) {
+    private void inject(LiteralArgumentBuilder<ClientSuggestionProvider> builder, CallbackInfo ci) {
         builder.then(literal("higtools").then(literal("off").executes(context -> {
             Modules modules = Modules.get();
 

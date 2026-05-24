@@ -1,6 +1,6 @@
 package me.redcarlos.higtools.utils;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 import static meteordevelopment.meteorclient.utils.world.BlockUtils.canPlace;
@@ -15,7 +15,7 @@ public class HIGUtils {
     }
 
     public static BlockPos forward(BlockPos pos, int distance) {
-        return switch (mc.player.getHorizontalFacing()) {
+        return switch (mc.player.getDirection()) {
             case SOUTH -> pos.south(distance);
             case NORTH -> pos.north(distance);
             case WEST -> pos.west(distance);
@@ -24,7 +24,7 @@ public class HIGUtils {
     }
 
     public static BlockPos backward(BlockPos pos, int distance) {
-        return switch (mc.player.getHorizontalFacing()) {
+        return switch (mc.player.getDirection()) {
             case SOUTH -> pos.north(distance);
             case NORTH -> pos.south(distance);
             case WEST -> pos.east(distance);
@@ -33,7 +33,7 @@ public class HIGUtils {
     }
 
     public static BlockPos left(BlockPos pos, int distance) {
-        return switch (mc.player.getHorizontalFacing()) {
+        return switch (mc.player.getDirection()) {
             case SOUTH -> pos.east(distance);
             case NORTH -> pos.west(distance);
             case WEST -> pos.south(distance);
@@ -42,7 +42,7 @@ public class HIGUtils {
     }
 
     public static BlockPos right(BlockPos pos, int distance) {
-        return switch (mc.player.getHorizontalFacing()) {
+        return switch (mc.player.getDirection()) {
             case SOUTH -> pos.west(distance);
             case NORTH -> pos.east(distance);
             case WEST -> pos.north(distance);

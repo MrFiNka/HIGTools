@@ -13,7 +13,7 @@ import meteordevelopment.meteorclient.systems.modules.render.FreeLook;
 import meteordevelopment.meteorclient.utils.player.FindItemResult;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 
 import java.util.List;
 
@@ -106,7 +106,7 @@ public class HighwayTools extends Module {
 
     @Override
     public void onActivate() {
-        if (mc.player == null || mc.world == null) return;
+        if (mc.player == null || mc.level == null) return;
 
         // Get coords of the player from an axis (for axis toggle)
         originX = Math.abs(mc.player.getX());
@@ -198,7 +198,7 @@ public class HighwayTools extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (mc.player == null || mc.world == null) return;
+        if (mc.player == null || mc.level == null) return;
 
         // If player isn't on axis from the start, check if player reached axis
         if (axisToggle.get()) {

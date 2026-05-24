@@ -8,7 +8,7 @@ import meteordevelopment.meteorclient.utils.player.PlayerUtils;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 
 public class AxisViewer extends Module {
     private final SettingGroup sgOverworld = settings.createGroup("Overworld");
@@ -102,7 +102,7 @@ public class AxisViewer extends Module {
 
     @EventHandler
     private void onRender3D(Render3DEvent event) {
-        if (mc.options.hudHidden) return;
+        if (mc.options.hideGui) return;
 
         AxisType axisType;
         int y;
@@ -133,30 +133,30 @@ public class AxisViewer extends Module {
 
         // Render cardinal lines
         if (axisType.cardinals()) {
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(30_000_000, renderY, 0), lineColor); // X+
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(-30_000_000, renderY, 0), lineColor); // -X
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(0, renderY, 30_000_000), lineColor); // Z+
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(0, renderY, -30_000_000), lineColor); // -Z
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(30_000_000, renderY, 0), lineColor); // X+
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(-30_000_000, renderY, 0), lineColor); // -X
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(0, renderY, 30_000_000), lineColor); // Z+
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(0, renderY, -30_000_000), lineColor); // -Z
         }
 
         // Render diagonal lines
         if (axisType.diagonals()) {
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(30_000_000, renderY, 30_000_000), lineColor); // ++
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(30_000_000, renderY, -30_000_000), lineColor); // +-
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(-30_000_000, renderY, 30_000_000), lineColor); // -+
-            drawSegmentedLine(event, new Vec3d(0, renderY, 0), new Vec3d(-30_000_000, renderY, -30_000_000), lineColor); // --
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(30_000_000, renderY, 30_000_000), lineColor); // ++
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(30_000_000, renderY, -30_000_000), lineColor); // +-
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(-30_000_000, renderY, 30_000_000), lineColor); // -+
+            drawSegmentedLine(event, new Vec3(0, renderY, 0), new Vec3(-30_000_000, renderY, -30_000_000), lineColor); // --
         }
     }
 
-    private void drawSegmentedLine(Render3DEvent event, Vec3d start, Vec3d end, Color color) {
+    private void drawSegmentedLine(Render3DEvent event, Vec3 start, Vec3 end, Color color) {
         double segmentLength = 100_000; // Length of each segment to avoid rendering issues
-        Vec3d direction = end.subtract(start).normalize();
+        Vec3 direction = end.subtract(start).normalize();
         double totalLength = start.distanceTo(end);
         int segments = (int) (totalLength / segmentLength);
 
-        Vec3d currentStart = start;
+        Vec3 currentStart = start;
         for (int i = 0; i < segments; i++) {
-            Vec3d currentEnd = currentStart.add(direction.multiply(segmentLength));
+            Vec3 currentEnd = currentStart.add(direction.scale(segmentLength));
             drawLine(event, currentStart, currentEnd, color);
             currentStart = currentEnd;
         }
@@ -164,9 +164,8 @@ public class AxisViewer extends Module {
         drawLine(event, currentStart, end, color);
     }
 
-    private void drawLine(Render3DEvent event, Vec3d start, Vec3d end, Color color) {
-        event.renderer.line(start.getX(), start.getY(), start.getZ(),
-            end.getX(), end.getY(), end.getZ(), color);
+    private void drawLine(Render3DEvent event, Vec3 start, Vec3 end, Color color) {
+        event.renderer.line(start.x(), start.y(), start.z(), end.x(), end.y(), end.z(), color);
     }
 
     public enum AxisType {

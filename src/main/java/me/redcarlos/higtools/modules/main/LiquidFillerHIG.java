@@ -11,12 +11,12 @@ import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.meteorclient.utils.world.BlockIterator;
 import meteordevelopment.meteorclient.utils.world.BlockUtils;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItem;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -105,7 +105,7 @@ public class LiquidFillerHIG extends Module {
         .build()
     );
 
-    private final List<BlockPos.Mutable> blocks = new ArrayList<>();
+    private final List<BlockPos.MutableBlockPos> blocks = new ArrayList<>();
 
     private int timer;
 
@@ -120,7 +120,7 @@ public class LiquidFillerHIG extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        if (mc.player == null || mc.world == null) return;
+        if (mc.player == null || mc.level == null) return;
 
         // Update timer according to delay
         if (timer < delay.get()) {
@@ -142,9 +142,9 @@ public class LiquidFillerHIG extends Module {
         // Find slot with a block
         FindItemResult item;
         if (listMode.get() == ListMode.Whitelist) {
-            item = InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof BlockItem && whitelist.get().contains(Block.getBlockFromItem(itemStack.getItem())));
+            item = InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof BlockItem && whitelist.get().contains(Block.byItem(itemStack.getItem())));
         } else {
-            item = InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof BlockItem && !blacklist.get().contains(Block.getBlockFromItem(itemStack.getItem())));
+            item = InvUtils.findInHotbar(itemStack -> itemStack.getItem() instanceof BlockItem && !blacklist.get().contains(Block.byItem(itemStack.getItem())));
         }
         if (!item.found()) return;
 
@@ -158,7 +158,7 @@ public class LiquidFillerHIG extends Module {
             if ((tooFarSphere && shape.get() == Shape.Sphere) || (tooFarUniformCube && shape.get() == Shape.UniformCube) || belowPlayer) return;
 
             // Check if the block is a source block and set to be filled
-            Fluid fluid = blockState.getFluidState().getFluid();
+            Fluid fluid = blockState.getFluidState().getType();
             if ((placeInLiquids.get() == PlaceIn.Both && (fluid != Fluids.WATER && fluid != Fluids.LAVA))
                 || (placeInLiquids.get() == PlaceIn.Water && fluid != Fluids.WATER)
                 || (placeInLiquids.get() == PlaceIn.Lava && fluid != Fluids.LAVA))
@@ -168,7 +168,7 @@ public class LiquidFillerHIG extends Module {
             if (!BlockUtils.canPlace(blockPos)) return;
 
             // Add block
-            blocks.add(blockPos.mutableCopy());
+            blocks.add(blockPos.mutable());
         });
 
         BlockIterator.after(() -> {

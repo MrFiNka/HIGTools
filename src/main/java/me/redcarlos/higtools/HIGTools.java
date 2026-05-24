@@ -19,8 +19,8 @@ import meteordevelopment.meteorclient.systems.modules.misc.BetterChat;
 import meteordevelopment.meteorclient.utils.misc.MeteorStarscript;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
-import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.Identifier;
 import org.meteordev.starscript.value.ValueMap;
 
 public class HIGTools extends MeteorAddon {
@@ -35,8 +35,8 @@ public class HIGTools extends MeteorAddon {
         METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
         VERSION = METADATA.getVersion().getFriendlyString();
 
-        MAIN = new Category("HIG Tools", Items.NETHERITE_PICKAXE.getDefaultStack());
-        BORERS = new Category("  Borers  ", Items.NETHERITE_PICKAXE.getDefaultStack());
+        MAIN = new Category("HIG Tools", Items.NETHERITE_PICKAXE::getDefaultInstance);
+        BORERS = new Category("  Borers  ", Items.NETHERITE_PICKAXE::getDefaultInstance);
         HUD = new HudGroup("HIG Tools");
     }
 
@@ -92,6 +92,6 @@ public class HIGTools extends MeteorAddon {
     }
 
     public static Identifier identifier(String path) {
-        return Identifier.of(MOD_ID, path);
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 }

@@ -11,8 +11,8 @@ import meteordevelopment.meteorclient.utils.player.FindItemResult;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.meteorclient.utils.world.TickRate;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +89,9 @@ public class HotbarManager extends Module {
             ItemSetting setting = (ItemSetting) itemSettings.get(i);
             if (setting.get() == Items.AIR) continue;
 
-            Item slotItem = mc.player.getInventory().getStack(i).getItem();
+            Item slotItem = mc.player.getInventory().getItem(i).getItem();
             if (slotItem != Items.AIR && !replace.get()) continue;
-            if (mc.player.getInventory().getStack(i).getItem() == setting.get()) continue;
+            if (mc.player.getInventory().getItem(i).getItem() == setting.get()) continue;
 
             FindItemResult result = InvUtils.find(stack -> stack.getItem() == setting.get(), i, 35);
             if (!result.found()) continue;

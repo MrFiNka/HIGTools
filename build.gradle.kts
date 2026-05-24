@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom") version "1.16-SNAPSHOT"
+    id("net.fabricmc.fabric-loom") version "1.16-SNAPSHOT"
 }
 
 base {
@@ -22,11 +22,10 @@ repositories {
 dependencies {
     // Fabric
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
-    mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
 
     // Meteor
-    modImplementation("meteordevelopment:meteor-client:${project.property("minecraft_version")}-SNAPSHOT")
+    implementation("meteordevelopment:meteor-client:${project.property("minecraft_version")}-SNAPSHOT")
 }
 
 loom {
@@ -53,7 +52,7 @@ tasks {
     }
 
     withType<JavaCompile> {
-        options.release = 21
+        options.release = 25
         options.compilerArgs.add("-Xlint:deprecation")
         options.compilerArgs.add("-Xlint:unchecked")
     }

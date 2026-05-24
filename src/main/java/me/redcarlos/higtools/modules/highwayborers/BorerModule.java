@@ -8,9 +8,9 @@ import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 
 import java.util.stream.IntStream;
 
@@ -42,7 +42,7 @@ public abstract class BorerModule extends Module {
 
     protected int packets = 0;
     protected long lastUpdateTime = 0; // Last time packets were sent
-    protected BlockPos playerPos = BlockPos.ORIGIN; // Floored block position of player
+    protected BlockPos playerPos = BlockPos.ZERO; // Floored block position of player
 
     protected BorerModule(String name, String description, int extForwards, int extBackwards, int xOffset, int zOffset) {
         super(HIGTools.BORERS, name, description);
@@ -88,58 +88,58 @@ public abstract class BorerModule extends Module {
     protected void do2x3(BlockPos playerPos) {
         IntStream.rangeClosed(-extBackward.get(), extForward.get()).forEach(i -> {
             breakBlock(forward(playerPos, i));
-            breakBlock(forward(playerPos, i).up());
-            breakBlock(forward(playerPos, i).up(2));
+            breakBlock(forward(playerPos, i).above());
+            breakBlock(forward(playerPos, i).above(2));
             breakBlock(left(forward(playerPos, i), 1));
-            breakBlock(left(forward(playerPos, i), 1).up());
-            breakBlock(left(forward(playerPos, i), 1).up(2));
+            breakBlock(left(forward(playerPos, i), 1).above());
+            breakBlock(left(forward(playerPos, i), 1).above(2));
         });
     }
 
     protected void doHighway4(BlockPos playerPos) {
         IntStream.rangeClosed(-extBackward.get(), extForward.get()).forEach(i -> {
             breakBlock(forward(playerPos, i));
-            breakBlock(forward(playerPos, i).up());
-            breakBlock(forward(playerPos, i).up(2));
-            breakBlock(forward(playerPos, i).up(3));
+            breakBlock(forward(playerPos, i).above());
+            breakBlock(forward(playerPos, i).above(2));
+            breakBlock(forward(playerPos, i).above(3));
 
             breakBlock(right(forward(playerPos, i), 1));
-            breakBlock(right(forward(playerPos, i), 1).up());
-            breakBlock(right(forward(playerPos, i), 1).up(2));
-            breakBlock(right(forward(playerPos, i), 1).up(3));
+            breakBlock(right(forward(playerPos, i), 1).above());
+            breakBlock(right(forward(playerPos, i), 1).above(2));
+            breakBlock(right(forward(playerPos, i), 1).above(3));
 
-            breakBlock(right(forward(playerPos, i), 2).up());
-            breakBlock(right(forward(playerPos, i), 2).up(2));
-            breakBlock(right(forward(playerPos, i), 2).up(3));
+            breakBlock(right(forward(playerPos, i), 2).above());
+            breakBlock(right(forward(playerPos, i), 2).above(2));
+            breakBlock(right(forward(playerPos, i), 2).above(3));
 
             breakBlock(left(forward(playerPos, i), 1));
-            breakBlock(left(forward(playerPos, i), 1).up());
-            breakBlock(left(forward(playerPos, i), 1).up(2));
-            breakBlock(left(forward(playerPos, i), 1).up(3));
+            breakBlock(left(forward(playerPos, i), 1).above());
+            breakBlock(left(forward(playerPos, i), 1).above(2));
+            breakBlock(left(forward(playerPos, i), 1).above(3));
 
             breakBlock(left(forward(playerPos, i), 2));
-            breakBlock(left(forward(playerPos, i), 2).up());
-            breakBlock(left(forward(playerPos, i), 2).up(2));
-            breakBlock(left(forward(playerPos, i), 2).up(3));
+            breakBlock(left(forward(playerPos, i), 2).above());
+            breakBlock(left(forward(playerPos, i), 2).above(2));
+            breakBlock(left(forward(playerPos, i), 2).above(3));
 
-            breakBlock(left(forward(playerPos, i), 3).up());
-            breakBlock(left(forward(playerPos, i), 3).up(2));
-            breakBlock(left(forward(playerPos, i), 3).up(3));
+            breakBlock(left(forward(playerPos, i), 3).above());
+            breakBlock(left(forward(playerPos, i), 3).above(2));
+            breakBlock(left(forward(playerPos, i), 3).above(3));
         });
     }
 
     protected void breakBlock(BlockPos blockPos) {
-        if (mc.player == null || mc.world == null) return;
+        if (mc.player == null || mc.level == null) return;
 
-        if (packets >= 130 || mc.world.getBlockState(blockPos).isReplaceable()) {
+        if (packets >= 130 || mc.level.getBlockState(blockPos).canBeReplaced()) {
             return;
         }
 
-        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
-        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, Direction.UP));
+        mc.player.connection.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockPos, Direction.UP));
+        mc.player.connection.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, blockPos, Direction.UP));
         packets += 2;
 
-        mc.player.getInventory().updateItems();
+        mc.player.getInventory().tick();
     }
 
     public enum Shape {

@@ -12,8 +12,8 @@ import meteordevelopment.meteorclient.utils.player.FindItemResult;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.meteorclient.utils.world.TickRate;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.item.Items;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.world.item.Items;
 
 public class AutoWalkHIG extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -95,7 +95,7 @@ public class AutoWalkHIG extends Module {
             }
         }
 
-        setPressed(mc.options.forwardKey, true);
+        setPressed(mc.options.keyUp, true);
 
         if (keepY.get()) {
             if (mc.player == null) return;
@@ -126,11 +126,11 @@ public class AutoWalkHIG extends Module {
     }
 
     private void unpress() {
-        setPressed(mc.options.forwardKey, false);
+        setPressed(mc.options.keyUp, false);
     }
 
-    private void setPressed(KeyBinding key, boolean pressed) {
-        key.setPressed(pressed);
+    private void setPressed(KeyMapping key, boolean pressed) {
+        key.setDown(pressed);
         Input.setKeyState(key, pressed);
     }
 }

@@ -56,21 +56,21 @@ public class AutoCenter extends Module {
     }
 
     private void check() {
-        if (mc.player == null || mc.world == null) return;
+        if (mc.player == null || mc.level == null) return;
 
         if (highway == -1) toggle();
         if (highway == 5) {
             double addZ = mc.player.getZ() - mc.player.getX();
-            mc.player.addVelocity(0.0, 0.0, Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), comp.get() - addZ)));
+            mc.player.push(0.0, 0.0, Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), comp.get() - addZ)));
         } else if (highway == 6) {
             double addX = Math.abs(mc.player.getX()) - mc.player.getZ();
-            mc.player.addVelocity(Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), addX - comp.get())), 0.0, 0.0);
+            mc.player.push(Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), addX - comp.get())), 0.0, 0.0);
         } else if (highway == 7) {
             double addX = mc.player.getX() - Math.abs(mc.player.getZ());
-            mc.player.addVelocity(Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), comp.get() - addX)), 0.0, 0.0);
+            mc.player.push(Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), comp.get() - addX)), 0.0, 0.0);
         } else if (highway == 8) {
             double addZ = Math.abs(mc.player.getZ()) - Math.abs(mc.player.getX());
-            mc.player.addVelocity(0.0, 0.0, Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), addZ - comp.get())));
+            mc.player.push(0.0, 0.0, Math.max(-maxSpeed.get(), Math.min(maxSpeed.get(), addZ - comp.get())));
         }
     }
 }
