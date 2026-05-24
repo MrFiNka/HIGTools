@@ -2,9 +2,9 @@ package me.redcarlos.higtools.modules.highwayborers;
 
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 
 public class NegNegBorer extends BorerModule {
     public NegNegBorer() {

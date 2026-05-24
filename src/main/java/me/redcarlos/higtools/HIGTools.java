@@ -19,8 +19,8 @@ import meteordevelopment.meteorclient.systems.modules.misc.BetterChat;
 import meteordevelopment.meteorclient.utils.misc.MeteorStarscript;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
-import net.minecraft.world.item.Items;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Items;
 import org.meteordev.starscript.value.ValueMap;
 
 public class HIGTools extends MeteorAddon {

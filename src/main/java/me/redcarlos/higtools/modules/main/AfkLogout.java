@@ -9,8 +9,8 @@ import meteordevelopment.meteorclient.systems.modules.misc.AutoReconnect;
 import meteordevelopment.meteorclient.utils.player.PlayerUtils;
 import meteordevelopment.meteorclient.utils.world.Dimension;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.network.protocol.common.ClientboundDisconnectPacket;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.common.ClientboundDisconnectPacket;
 
 public class AfkLogout extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
