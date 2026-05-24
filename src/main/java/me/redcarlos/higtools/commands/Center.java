@@ -12,7 +12,7 @@ public class Center extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
-        builder.executes(context -> {
+        builder.executes(_ -> {
             PlayerUtils.centerPlayer();
             return SINGLE_SUCCESS;
         });
