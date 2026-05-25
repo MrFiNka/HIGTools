@@ -10,10 +10,10 @@
 <div align="center">
     <a href="https://anticope.pages.dev/addons"><img src="https://img.shields.io/badge/Verified%20Addon-Yes-blueviolet" alt="Verified Addon"></a>
     <a href="https://github.com/RedCarlos26/higtools/releases"><img src="https://img.shields.io/badge/Version-v2.11.2-blueviolet" alt="Version"></a>
-    <a href="https://img.shields.io/badge/MC%20Version-1.21.11-blueviolet"><img src="https://img.shields.io/badge/MC%20Version-1.21.11-blueviolet" alt="Minecraft Version"></a>
-    <a href="https://img.shields.io/github/downloads/RedCarlos26/higtools/total?color=blueviolet&label=Total Downloads"><img src="https://img.shields.io/github/downloads/RedCarlos26/higtools/total?color=blueviolet&label=Total Downloads" alt="Total Downloads"></a>
+    <a href="https://minecraft.wiki/w/Java_Edition_1.21.1"><img src="https://img.shields.io/badge/MC%20Version-1.21.11-blueviolet" alt="Minecraft Version"></a>
+    <a href="https://github.com/RedCarlos26/higtools/releases"><img src="https://img.shields.io/github/downloads/RedCarlos26/higtools/total?color=blueviolet&label=Total%20Downloads" alt="Total Downloads"></a>
     <br>
-    <a href="https://img.shields.io/github/downloads/RedCarlos26/higtools/latest/total?color=blueviolet&label=Downloads for Latest Release"><img src="https://img.shields.io/github/downloads/RedCarlos26/higtools/latest/total?color=blueviolet&label=Downloads for Latest Release" alt="Downloads for Latest Release"></a>
+    <a href="https://img.shields.io/github/downloads/RedCarlos26/higtools/latest/total?color=blueviolet&label=Downloads for Latest Release"><img src="https://img.shields.io/github/downloads/RedCarlos26/higtools/latest/total?color=blueviolet&label=Downloads%20for%20Latest%20Release" alt="Downloads for Latest Release"></a>
     <p>
     <a href="https://discord.gg/a4jkKGJNdJ"><img src="https://invidget.switchblade.xyz/a4jkKGJNdJ" alt="HIGTools Logo"></a>
     </p>
